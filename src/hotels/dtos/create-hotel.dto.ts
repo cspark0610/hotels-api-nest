@@ -1,4 +1,5 @@
-import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEmail, IsEmpty, IsEnum, IsNotEmpty } from 'class-validator';
+import { User } from '../../auth/schemas/user.schema';
 import { Category } from '../schemas/hotel.schema';
 
 export class CreateHotelDto {
@@ -23,4 +24,7 @@ export class CreateHotelDto {
   readonly category: Category;
 
   readonly images?: object[];
+
+  @IsEmpty({ message: 'you can provide the user ID' })
+  readonly user: User;
 }

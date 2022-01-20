@@ -50,7 +50,7 @@ export class HotelsService {
     return newHotel;
   }
 
-  async findById(id: string): Promise<Hotel> {
+  async findById(id: string): Promise<any> {
     // mongoose valid ID validation
     const isValidId = mongoose.Types.ObjectId.isValid(id);
     if (!isValidId) throw new BadRequestException('Invalid mongo ID');
