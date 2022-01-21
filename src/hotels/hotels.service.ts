@@ -6,6 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Query } from 'express-serve-static-core';
 import * as mongoose from 'mongoose';
+import { User } from '../auth/schemas/user.schema';
 import APIFeatures from '../utils/apiFeatures.util';
 import { Hotel } from './schemas/hotel.schema';
 
@@ -38,14 +39,9 @@ export class HotelsService {
     return hotels;
   }
 
-  async create(hotel: Hotel): Promise<Hotel> {
+  async create(hotel: Hotel, user: User): Promise<Hotel> {
     const location = await APIFeatures.getHotelLocation(hotel.address);
-    const createHotelData = Object.assign(hotel, { location });
-    /**
-     *   @Prop({ type: Object, ref: 'Location' })
-     *    location?: Location;
-     */
-
+    const createHotelData = Object.assign(hotel, { user: user._id, location });
     const newHotel = await this.hotelModel.create(createHotelData);
     return newHotel;
   }
@@ -65,13 +61,12 @@ export class HotelsService {
   async updateById(id: string, hotel: Hotel): Promise<Hotel> {
     const updatedHotel = await this.hotelModel.findByIdAndUpdate(id, hotel, {
       new: true,
+      runValidators: true,
     });
     return updatedHotel;
   }
 
   async deleteById(id: string): Promise<Hotel> {
-    const deletedHotel = await this.hotelModel.findByIdAndDelete(id);
-
-    return deletedHotel;
+    return await this.hotelModel.findByIdAndDelete(id);
   }
 }

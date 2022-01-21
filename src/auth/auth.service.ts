@@ -9,7 +9,7 @@ import { User } from './schemas/user.schema';
 import { SignUpDto } from './dtos/signup.dto';
 import * as bcrypt from 'bcryptjs';
 import { LoginDto } from './dtos/login.dto';
-import APIFeatures from 'src/utils/apiFeatures.util';
+import APIFeatures from '../utils/apiFeatures.util';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

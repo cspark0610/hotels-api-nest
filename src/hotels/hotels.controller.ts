@@ -28,19 +28,18 @@ export class HotelsController {
   @Get()
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRoles.SELLER, UserRoles.USER)
-  async getAllHotels(
-    @Query() query: ExpressQuery,
-    @CurrentUser() user: User,
-  ): Promise<Hotel[]> {
+  async getAllHotels(@Query() query: ExpressQuery): Promise<Hotel[]> {
     return this.hotelsService.findAll(query);
   }
 
   @Post()
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles(UserRoles.SELLER)
-  async createHotel(@Body() hotel: CreateHotelDto): Promise<Hotel> {
-    //user el decorador del user para guardar tb el userId que esta creando un hotel
-    return this.hotelsService.create(hotel as any);
+  async createHotel(
+    @Body() hotel: CreateHotelDto,
+    @CurrentUser() user: User,
+  ): Promise<Hotel> {
+    return this.hotelsService.create(hotel as any, user);
   }
 
   @Get('/:id')
@@ -57,9 +56,9 @@ export class HotelsController {
     @Body() hotel: UpdateHotelDto,
     @CurrentUser() user: User,
   ): Promise<Hotel> {
-    const resHotel = await this.hotelsService.findById(id);
+    const response = await this.hotelsService.findById(id);
 
-    if (resHotel.user.toString() !== user.id.toString()) {
+    if (response.user.toString() !== user._id.toString()) {
       throw new ForbiddenException(
         'You are not allowed to update this hotel becuase you are not the owner',
       );
@@ -75,7 +74,7 @@ export class HotelsController {
   ): Promise<{ deleted: boolean }> {
     const resHotel = await this.hotelsService.findById(id);
 
-    if (resHotel.user.toString() !== user.id.toString()) {
+    if (resHotel.user.toString() !== user._id.toString()) {
       throw new ForbiddenException(
         'You are not allowed to update this hotel becuase you are not the owner',
       );
