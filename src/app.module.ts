@@ -17,8 +17,12 @@ import { VisitOrdersModule } from './visit-orders/visit-orders.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        //console.log(configService.get<string>('NODE_ENV'));
         return {
-          uri: configService.get<string>('MONGODB_URI'),
+          uri:
+            configService.get<string>('NODE_ENV') === 'test'
+              ? configService.get<string>('MONGODB_URI_TEST')
+              : configService.get<string>('MONGODB_URI'),
           useNewUrlParser: true,
           useUnifiedTopology: true,
         };

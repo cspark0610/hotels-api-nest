@@ -23,8 +23,8 @@ export class Hotel extends Document {
   @Prop()
   email: string;
 
-  @Prop()
-  phone: number;
+  // @Prop()
+  // phone: number;
 
   @Prop()
   address: string;
@@ -32,8 +32,8 @@ export class Hotel extends Document {
   @Prop()
   category: Category;
 
-  @Prop()
-  images?: object[];
+  // @Prop()
+  // images?: object[];
 
   @Prop({ type: Object, ref: 'Location' })
   location?: Location;
