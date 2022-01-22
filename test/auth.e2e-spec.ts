@@ -27,28 +27,22 @@ describe('AuthController (e2e)', () => {
   afterAll(() => mongoose.disconnect());
 
   it('(POST), /auth/signUp route register a new user', async () => {
-    return await request(app.getHttpServer())
+    const res = await request(app.getHttpServer())
       .post('/auth/signUp')
-      //.set('Accept', 'application/json')
-      .send(mockUser)
-      //.expect(201)
-      .then(({ body }) => {
-        expect(body.token).toBeDefined();
-        expect(body.email).toBe(mockUser.email);
-        expect(body.name).toBe(mockUser.name);
-        expect(body.role).toBe(UserRoles.USER);
-      });
+      .set('Accept', 'application/json')
+      .send(mockUser);
+
+    expect(res.status).toBe(201);
+    expect(res.body.email).toBe(mockUser.email);
+    expect(res.body.name).toBe(mockUser.name);
+    expect(res.body.role).toBe(UserRoles.USER);
   });
 
   it('(GET), /auth/login route login', async () => {
-    return await request(app.getHttpServer())
-      .get('/auth/signUp')
-      //.set('Accept', 'application/json')
-      .send({ ...mockLoginDto })
-      //.expect(200)
-      .then(({ body }) => {
-        expect(body.token).toBeDefined();
-        expect(body.email).toBe(mockLoginDto.email);
-      });
+    const res = await request(app.getHttpServer())
+      .get('/auth/login')
+      .send({ ...mockLoginDto });
+    expect(res.status).toBe(200);
+    expect(res.body.email).toBe(mockLoginDto.email);
   });
 });
