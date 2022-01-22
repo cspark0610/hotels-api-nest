@@ -18,7 +18,7 @@ describe('AuthController (e2e)', () => {
   });
   const uri_test = process.env.MONGODB_URI_TEST;
   beforeAll(() => {
-    console.log(`${uri_test} connected`);
+    //console.log(`${uri_test} connected`);
     mongoose.connect(uri_test, function () {
       return mongoose.connection.db.dropDatabase();
     });

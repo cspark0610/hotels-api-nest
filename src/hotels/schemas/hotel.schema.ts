@@ -1,8 +1,10 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Location } from './location.schema';
 import { Document } from 'mongoose';
-import { IsEmpty } from 'class-validator';
+//import { IsEmpty } from 'class-validator';
 import { User } from '../../auth/schemas/user.schema';
+import * as mongoose from 'mongoose';
+//import { VisitOrder } from '../../visit-orders/schemas/visit-order.schema';
 
 export enum Category {
   FIVE_START = 'FIVE_START',
@@ -12,7 +14,7 @@ export enum Category {
   ONE_START = 'ONE_START',
 }
 
-@Schema()
+@Schema({ timestamps: true })
 export class Hotel extends Document {
   @Prop()
   name: string;
@@ -23,23 +25,21 @@ export class Hotel extends Document {
   @Prop()
   email: string;
 
-  // @Prop()
-  // phone: number;
-
   @Prop()
   address: string;
 
   @Prop()
   category: Category;
 
-  // @Prop()
-  // images?: object[];
-
   @Prop({ type: Object, ref: 'Location' })
   location?: Location;
 
-  @IsEmpty({ message: 'you can provide the user ID' })
-  readonly user: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user: User;
+
+  // si es un array poner []
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'VisitOrder' }])
+  visitOrders?: string[];
 }
 
 export const HotelSchema = SchemaFactory.createForClass(Hotel);
