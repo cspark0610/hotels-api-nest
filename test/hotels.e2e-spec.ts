@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import * as mongoose from 'mongoose';
 import { newHotel, mockLoginDto } from '../src/constants/mock.contants';
+//import { Hotel } from '../src/hotels/schemas/hotel.schema';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;

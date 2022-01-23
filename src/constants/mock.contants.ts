@@ -1,3 +1,5 @@
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import * as mongoose from 'mongoose';
 import { UserRoles } from '../auth/schemas/user.schema';
 
 export const mockHotel = {
@@ -33,3 +35,18 @@ export const mockLoginDto = {
   email: 'user1@mail.com',
   password: '12345678',
 };
+export const mockVisitOrder = {
+  _id: new mongoose.Types.ObjectId().toString(),
+  visitDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
+  aditionalInfo: 'additional info',
+  phoneContact: 123456789,
+  hotelId: new mongoose.Types.ObjectId().toString(),
+  userId: new mongoose.Types.ObjectId().toString(),
+};
+
+export const mockNotFoundException = new NotFoundException(
+  'Hotel not found by ID',
+);
+export const mockForbiddenException = new ForbiddenException(
+  'You are not allowed to create a visit order for this hotel because you are the owner of this hotel',
+);

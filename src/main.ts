@@ -11,7 +11,7 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe({ forbidNonWhitelisted: true }));
   //app.setGlobalPrefix('api');
-  console.log('listening on port ' + 4000);
-  await app.listen(4000);
+  console.log('listening on port ', process.env.PORT);
+  await app.listen(process.env.PORT || 4001);
 }
 bootstrap();

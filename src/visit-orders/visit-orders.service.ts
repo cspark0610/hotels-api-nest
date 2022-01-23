@@ -96,7 +96,6 @@ export class VisitOrdersService {
     await hotel.save();
 
     if (deletedVisitOrder) {
-      //also filtering the visit order array id from hotel schema collection
       return { deleted: true };
     }
     return { deleted: false };
