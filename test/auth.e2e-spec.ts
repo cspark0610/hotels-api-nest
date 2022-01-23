@@ -3,9 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import * as mongoose from 'mongoose';
-import { mockUser, mockLoginDto } from '../src/constants/mock.contants';
-import { UserRoles } from '../src/auth/schemas/user.schema';
 
+const user = {
+  name: 'test',
+  email: 'email1@gmail.com',
+  password: '123456789',
+};
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   beforeEach(async () => {
@@ -26,23 +29,23 @@ describe('AuthController (e2e)', () => {
 
   afterAll(() => mongoose.disconnect());
 
-  it('(POST), /auth/signUp route register a new user', async () => {
-    const res = await request(app.getHttpServer())
-      .post('/auth/signUp')
-      .set('Accept', 'application/json')
-      .send(mockUser);
-
-    expect(res.status).toBe(201);
-    expect(res.body.email).toBe(mockUser.email);
-    expect(res.body.name).toBe(mockUser.name);
-    expect(res.body.role).toBe(UserRoles.USER);
+  it('(POST) - register a new user', () => {
+    return request(app.getHttpServer())
+      .post('/auth/signup')
+      .send(user)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.token).toBeDefined();
+      });
   });
 
-  it('(GET), /auth/login route login', async () => {
-    const res = await request(app.getHttpServer())
+  it('(GET) - login user', () => {
+    return request(app.getHttpServer())
       .get('/auth/login')
-      .send({ ...mockLoginDto });
-    expect(res.status).toBe(200);
-    expect(res.body.email).toBe(mockLoginDto.email);
+      .send({ email: user.email, password: user.password })
+      .expect(200)
+      .then((res) => {
+        expect(res.body.token).toBeDefined();
+      });
   });
 });

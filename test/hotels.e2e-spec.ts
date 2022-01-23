@@ -3,8 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import * as mongoose from 'mongoose';
-import { newHotel, mockLoginDto } from '../src/constants/mock.contants';
-//import { Hotel } from '../src/hotels/schemas/hotel.schema';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
@@ -17,6 +15,22 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
+  const user = {
+    name: 'test',
+    email: 'email1@gmail.com',
+    password: '123456789',
+  };
+  const newHotel = {
+    name: 'Hotel new',
+    description: 'Hotel new description',
+    email: 'fake@gmail.com',
+    address: '123 Fake St',
+    category: 'TWO_START',
+    location: {},
+    user: '61cd5ekcsv66945x1wc',
+    _id: '61cd5ekcsv66945x1wc',
+  };
+
   afterAll(() => mongoose.disconnect());
 
   let jwtToken;
@@ -25,61 +39,65 @@ describe('AuthController (e2e)', () => {
   it('(GET), /auth/login route login', async () => {
     const res = await request(app.getHttpServer())
       .get('/auth/login')
-      .send({ ...mockLoginDto });
+      .send({ email: user.email, password: user.password });
     jwtToken = res.body.token;
     expect(res.status).toBe(200);
-    expect(res.body.email).toBe(mockLoginDto.email);
   });
 
   it('(POST), /hotels route create a new hotel', async () => {
     console.log('jwtToken', jwtToken);
-    const res = await request(app.getHttpServer())
+    return request(app.getHttpServer())
       .post('/hotels')
-      .set('Authorization', 'Bearer ' + jwtToken)
-      .send(newHotel);
-
-    hotelCreated = res.body;
-
-    expect(res.status).toBe(201);
-    expect(res.body._id).toBeDefined();
-    expect(res.body.name).toEqual(newHotel.name);
+      .set('Authorization', `Bearer ${jwtToken}`)
+      .send(newHotel)
+      .expect(201)
+      .then((res) => {
+        hotelCreated = res.body;
+        console.log(hotelCreated);
+        expect(res.body._id).toBeDefined();
+        expect(res.body.name).toEqual(newHotel.name);
+      });
   });
 
   it('(GET), /hotels route it gets all hotels', async () => {
-    const res = await request(app.getHttpServer()).get('/hotels');
-
-    expect(res.status).toBe(200);
-    expect(res.body.length).toBeGreaterThan(0);
+    return request(app.getHttpServer())
+      .get('/hotels')
+      .expect(200)
+      .then((res) => {
+        expect(res.body.length).toBe(1);
+      });
   });
 
   it('(GET), /hotels/:id route it gets one hotel by id', async () => {
-    const res = await request(app.getHttpServer()).get(
-      `/hotels/${hotelCreated._id}`,
-    );
-
-    expect(res.status).toBe(200);
-    expect(res.body).toBeDefined();
-    expect(res.body._id).toEqual(hotelCreated._id);
+    return request(app.getHttpServer())
+      .get(`/hotels/${hotelCreated._id}`)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toBeDefined();
+        expect(res.body._id).toEqual(hotelCreated._id);
+      });
   });
 
   it('(PUT), /hotels/:id route it edit one hotel by id', async () => {
-    const res = await request(app.getHttpServer())
+    return request(app.getHttpServer())
       .put(`/hotels/${hotelCreated._id}`)
       .set('Authorization', 'Bearer ' + jwtToken)
-      .send({ name: 'updated name' });
-
-    expect(res.status).toBe(200);
-    expect(res.body).toBeDefined();
-    expect(res.body.name).toEqual('updated name');
+      .send({ name: 'Updated name' })
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toBeDefined();
+        expect(res.body.name).toEqual('Updated name');
+      });
   });
 
   it('(DELETE), /hotels/:id route it removes one hotel by id', async () => {
-    const res = await request(app.getHttpServer())
+    return request(app.getHttpServer())
       .delete(`/hotels/${hotelCreated._id}`)
-      .set('Authorization', 'Bearer ' + jwtToken);
-
-    expect(res.status).toBe(200);
-    expect(res.body).toBeDefined();
-    expect(res.body.deleted).toEqual(true);
+      .set('Authorization', 'Bearer ' + jwtToken)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toBeDefined();
+        expect(res.body.deleted).toEqual(true);
+      });
   });
 });
