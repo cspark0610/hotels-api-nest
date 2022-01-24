@@ -101,10 +101,9 @@ describe('VisitOrdersService', () => {
     const hotel = {
       ...mockHotel,
       _id: new mongoose.Types.ObjectId().toString(),
+      user: '0012345678900',
       visitOrders: [],
     };
-    console.log('hotel', hotel);
-    console.log('mockCreateDataObject', mockCreateDataObject);
 
     it('should throw not found exception if id hotel passed is wrong', async () => {
       jest
@@ -133,10 +132,13 @@ describe('VisitOrdersService', () => {
         mockCreateDataObject as any,
         mockUser as any,
       );
-      console.log('result', createdVisitOrder);
+      // console.log('result', createdVisitOrder);
+      // console.log('result', mockVisitOrder);
       hotel.visitOrders.push(createdVisitOrder);
-      //expect(createdVisitOrder).toMatchObject(mockVisitOrder);
+
       expect(createdVisitOrder).toBeInstanceOf(Object);
+      expect(createdVisitOrder).toMatchObject(mockVisitOrder);
+      expect(hotel.visitOrders.length).toBeGreaterThan(0);
     });
   });
   describe('update visit order by id', () => {
@@ -179,13 +181,6 @@ describe('VisitOrdersService', () => {
         (item) => item !== visitOrder._id,
       );
       // falta mockear esta parte await hotel.save();
-      mockHotelsService.save = jest.fn().mockImplementationOnce(
-        () =>
-          Promise.resolve({
-            ...hotel,
-            visitOrders: filtered,
-          }) as any,
-      );
 
       expect(result).toBeInstanceOf(Object);
       expect(result.deleted).toBe(true);

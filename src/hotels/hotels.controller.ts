@@ -26,15 +26,13 @@ export class HotelsController {
   constructor(private hotelsService: HotelsService) {}
 
   @Get()
-  @UseGuards(AuthGuard(), RolesGuard)
-  @Roles(UserRoles.SELLER, UserRoles.USER)
   async getAllHotels(@Query() query: ExpressQuery): Promise<Hotel[]> {
     return this.hotelsService.findAll(query);
   }
 
   @Post()
   @UseGuards(AuthGuard(), RolesGuard)
-  @Roles(UserRoles.SELLER)
+  @Roles('SELLER', 'USER')
   async createHotel(
     @Body() hotel: CreateHotelDto,
     @CurrentUser() user: User,
@@ -43,14 +41,12 @@ export class HotelsController {
   }
 
   @Get('/:id')
-  @UseGuards(AuthGuard(), RolesGuard)
-  @Roles(UserRoles.SELLER, UserRoles.USER)
   async getHotelById(@Param('id') id: string): Promise<Hotel> {
     return this.hotelsService.findById(id);
   }
 
   @Put('/:id')
-  @UseGuards(AuthGuard(), RolesGuard)
+  @UseGuards(AuthGuard())
   async updateHotel(
     @Param('id') id: string,
     @Body() hotel: UpdateHotelDto,
@@ -67,7 +63,7 @@ export class HotelsController {
   }
 
   @Delete('/:id')
-  @UseGuards(AuthGuard(), RolesGuard)
+  @UseGuards(AuthGuard())
   async deleteHotel(
     @Param('id') id: string,
     @CurrentUser() user: User,

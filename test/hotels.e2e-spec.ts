@@ -48,7 +48,8 @@ describe('AuthController (e2e)', () => {
     console.log('jwtToken', jwtToken);
     return request(app.getHttpServer())
       .post('/hotels')
-      .set('Authorization', `Bearer ${jwtToken}`)
+      .set('Authorization', 'Bearer ' + jwtToken)
+      .set('Accept', 'application/json')
       .send(newHotel)
       .expect(201)
       .then((res) => {
