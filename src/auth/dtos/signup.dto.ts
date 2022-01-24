@@ -17,5 +17,5 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly role: UserRoles;
+  readonly role: UserRoles.USER | UserRoles.SELLER;
 }

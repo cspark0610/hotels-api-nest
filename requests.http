@@ -7,6 +7,17 @@ Content-Type: application/json
   "password": "12345678",
   "role": "SELLER"
 }
+###
+# Error: connect ETIMEDOUT 142.250.79.165:587
+#     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1146:16) {
+#   errno: -60,
+#   code: 'ESOCKET',
+#   syscall: 'connect',
+#   address: '142.250.79.165',
+#   port: 587,
+#   command: 'CONN'
+# }
+
 
 ### RESPONSE
 # {

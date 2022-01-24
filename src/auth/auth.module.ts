@@ -7,9 +7,13 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { MailModule } from '../mail/mail.module';
+import { MailService } from '../mail/mail.service';
 
 @Module({
   imports: [
+    //para el envio de mail
+    MailModule,
     // para registrar con passport la estrategia de autenticacion
     PassportModule.register({ defaultStrategy: 'jwt' }),
     // para armar el token
@@ -26,7 +30,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, MailService],
   // se necesita exportar jwtStrategy y passportModule para proteger rutas
   exports: [JwtStrategy, PassportModule],
 })

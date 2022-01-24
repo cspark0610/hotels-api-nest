@@ -11,6 +11,7 @@ import * as bcrypt from 'bcryptjs';
 import { LoginDto } from './dtos/login.dto';
 import APIFeatures from '../utils/apiFeatures.util';
 import { JwtService } from '@nestjs/jwt';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   async signUp(signUpDto: SignUpDto): Promise<{ token: string }> {
@@ -33,6 +35,8 @@ export class AuthService {
       });
 
       const token = await APIFeatures.assignJwtToken(user._id, this.jwtService);
+      // una vez creado el token mandamos el mail
+      //await this.mailService.sendUserConfirmation(user, token);
       return { token: token };
     } catch (error) {
       console.log(error);

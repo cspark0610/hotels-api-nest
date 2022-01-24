@@ -42,6 +42,7 @@ describe('AuthService', () => {
       email: 'user1@mail.com',
       name: 'namefake',
       password: '12345678',
+      role: 'SELLER',
     };
     const loginDto = { email: signUpDto.email, password: signUpDto.password };
     it('should resgister a new user', async () => {
@@ -52,7 +53,7 @@ describe('AuthService', () => {
       jest
         .spyOn(APIFeatures, 'assignJwtToken')
         .mockResolvedValueOnce(mockToken); // jwtToken
-      const result = await service.signUp(signUpDto);
+      const result = await service.signUp(signUpDto as any);
       expect(bcrypt.hash).toHaveBeenCalled();
       expect(result.token).toEqual(mockToken);
     });
