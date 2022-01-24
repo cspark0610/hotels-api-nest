@@ -8,10 +8,13 @@ import * as bcrypt from 'bcryptjs';
 import { mockUser, mockToken } from '../constants/mock.contants';
 import APIFeatures from '../utils/apiFeatures.util';
 import { ConflictException } from '@nestjs/common';
+import { MailService } from '../mail/mail.service';
 
 const mockAuthService = {
   create: jest.fn(),
 };
+//set a mock mail service
+const mockMailService = {};
 describe('AuthService', () => {
   let service: AuthService;
   let model: Model<User>;
@@ -26,6 +29,8 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         { provide: getModelToken(User.name), useValue: mockAuthService },
+        MailService,
+        { provide: MailService, useValue: mockMailService },
       ],
     }).compile();
 

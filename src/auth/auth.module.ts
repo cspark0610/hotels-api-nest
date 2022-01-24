@@ -8,7 +8,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { MailModule } from '../mail/mail.module';
-import { MailService } from '../mail/mail.service';
 
 @Module({
   imports: [
@@ -30,7 +29,7 @@ import { MailService } from '../mail/mail.service';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, MailService],
+  providers: [AuthService, JwtStrategy],
   // se necesita exportar jwtStrategy y passportModule para proteger rutas
   exports: [JwtStrategy, PassportModule],
 })
