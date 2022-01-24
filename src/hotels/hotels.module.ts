@@ -12,6 +12,7 @@ import { HotelSchema } from './schemas/hotel.schema';
   ],
   controllers: [HotelsController],
   providers: [HotelsService],
+  // como el HotelsService es inyectado en VisitOrderService y en UsersService se debe exportarlo
   exports: [MongooseModule],
 })
 export class HotelsModule {}
