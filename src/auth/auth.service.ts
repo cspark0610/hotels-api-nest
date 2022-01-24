@@ -36,7 +36,7 @@ export class AuthService {
 
       const token = await APIFeatures.assignJwtToken(user._id, this.jwtService);
       // una vez creado el token mandamos el mail
-      //await this.mailService.sendUserConfirmation(user, token);
+      await this.mailService.sendUserConfirmation(user, token);
       return { token: token };
     } catch (error) {
       console.log(error);
