@@ -23,9 +23,11 @@ export class UsersService {
     if (!hotel) {
       throw new NotFoundException('Hotel not found by ID');
     }
-    if (!user.favorites.includes(hotelId)) {
-      user.favorites.push(hotelId);
-      await user.save();
+    // buscar el user sobre el cual se va a agregar el hotel como favorito
+    const userFound = await this.userModel.findById(user._id);
+    if (!userFound.favorites.includes(hotelId)) {
+      userFound.favorites.push(hotelId);
+      await userFound.save();
       return { added: hotel };
     }
     // si el hotelID ya estaba en favoritos, se lanza un error porque no se debe pushear el mismo hotelID mas de una vez
@@ -37,10 +39,12 @@ export class UsersService {
     if (!hotel) {
       throw new NotFoundException('Hotel not found by ID');
     }
-    if (user.favorites.includes(hotelId)) {
+    // buscar el user sobre el cual se va a agregar el hotel como favorito
+    const userFound = await this.userModel.findById(user._id);
+    if (userFound.favorites.includes(hotelId)) {
       // se filtra del array de favoritos si ese hotelId ya exisitia en favoritos
-      user.favorites.filter((id) => id !== hotelId);
-      await user.save();
+      userFound.favorites.filter((id) => id !== hotelId);
+      await userFound.save();
       return { removed: hotel };
     }
     // si el hotel no esta en favoritos, se lanza un error
