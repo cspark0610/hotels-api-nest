@@ -37,7 +37,6 @@ export class Hotel extends Document {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 
-  // si es un array poner []
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'VisitOrder' }])
   visitOrders?: string[];
 }

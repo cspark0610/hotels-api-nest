@@ -14,16 +14,11 @@ export class CreateHotelDto {
   readonly email: string;
 
   @IsNotEmpty()
-  readonly phone: number;
-
-  @IsNotEmpty()
   readonly address: string;
 
   @IsNotEmpty()
   @IsEnum(Category, { message: 'please enter the correct category' })
   readonly category: Category;
-
-  readonly images?: object[];
 
   @IsEmpty({ message: 'you can provide the user ID' })
   readonly user: User;

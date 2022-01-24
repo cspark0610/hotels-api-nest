@@ -32,7 +32,7 @@ export class HotelsController {
 
   @Post()
   @UseGuards(AuthGuard(), RolesGuard)
-  @Roles('SELLER', 'USER')
+  @Roles('SELLER')
   async createHotel(
     @Body() hotel: CreateHotelDto,
     @CurrentUser() user: User,

@@ -1,0 +1,104 @@
+POST http://localhost:4000/auth/signUp
+Content-Type: application/json
+
+{
+  "name": "user1",
+  "email": "user1@gmail.com",
+  "password": "12345678",
+  "role": "SELLER"
+}
+
+### RESPONSE
+# {
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8"
+# }
+
+POST http://localhost:4000/hotels
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8
+Content-Type: application/json
+
+{
+  "name": "Hotel 1",
+  "description": "hotel 1 description",
+  "email": "hotel-fake@mail.com",
+  "address": "123 Fake St",
+  "category": "FIVE_START"  
+}
+
+### RESPONSE
+# {
+#   "visitOrders": [],
+#   "user": "61eea2256e0dcf8c5abf729b",
+#   "category": "FIVE_START",
+#   "address": "123 Fake St",
+#   "email": "hotel-fake@mail.com",
+#   "description": "hotel 1 description",
+#   "name": "Hotel 1",
+#   "_id": "61eea58154e050bb22907771",
+#   "createdAt": "2022-01-24T13:11:29.514Z",
+#   "updatedAt": "2022-01-24T13:11:29.514Z",
+#   "__v": 0
+# }
+
+POST http://localhost:4000/hotels
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8
+Content-Type: application/json
+
+{
+  "name": "Hotel 2",
+  "description": "hotel 2 description",
+  "email": "hotel-fake22@mail.com",
+  "address": "123 Fake St",
+  "category": "TWO_START"  
+}
+
+###
+GET http://localhost:4000/hotels
+
+### RESPONSE
+# [
+#   {
+#     "_id": "61eea58154e050bb22907771",
+#     "visitOrders": [],
+#     "user": "61eea2256e0dcf8c5abf729b",
+#     "category": "FIVE_START",
+#     "address": "123 Fake St",
+#     "email": "hotel-fake@mail.com",
+#     "description": "hotel 1 description",
+#     "name": "Hotel 1",
+#     "createdAt": "2022-01-24T13:11:29.514Z",
+#     "updatedAt": "2022-01-24T13:11:29.514Z",
+#     "__v": 0
+#   },
+#   {
+#     "_id": "61eea6c8b33e265e3b964233",
+#     "visitOrders": [],
+#     "user": "61eea2256e0dcf8c5abf729b",
+#     "category": "TWO_START",
+#     "address": "123 Fake St",
+#     "email": "hotel-fake22@mail.com",
+#     "description": "hotel 2 description",
+#     "name": "Hotel 2",
+#     "createdAt": "2022-01-24T13:16:56.151Z",
+#     "updatedAt": "2022-01-24T13:16:56.151Z",
+#     "__v": 0
+#   }
+# ]
+
+GET http://localhost:4000/hotels/61eea6c8b33e265e3b964233
+
+### RESPONSE
+
+# {
+#   "_id": "61eea6c8b33e265e3b964233",
+#   "visitOrders": [],
+#   "user": "61eea2256e0dcf8c5abf729b",
+#   "category": "TWO_START",
+#   "address": "123 Fake St",
+#   "email": "hotel-fake22@mail.com",
+#   "description": "hotel 2 description",
+#   "name": "Hotel 2",
+#   "createdAt": "2022-01-24T13:16:56.151Z",
+#   "updatedAt": "2022-01-24T13:16:56.151Z",
+#   "__v": 0
+# }
