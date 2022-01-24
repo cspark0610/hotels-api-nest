@@ -7,14 +7,22 @@ Content-Type: application/json
   "password": "12345678",
   "role": "SELLER"
 }
-###
+### login
+
+GET http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user1@gmail.com",
+  "password": "12345678"
+}
 
 
 
 
 ### RESPONSE
 # {
-#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8"
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0"
 # }
 
 POST http://localhost:4000/hotels
@@ -105,4 +113,95 @@ GET http://localhost:4000/hotels/61eea6c8b33e265e3b964233
 #   "createdAt": "2022-01-24T13:16:56.151Z",
 #   "updatedAt": "2022-01-24T13:16:56.151Z",
 #   "__v": 0
+# }
+
+### ADD ONE HOTEL TO USER FAVORITES
+
+POST http://localhost:4000/users/add-favorite/61eea58154e050bb22907771
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0  
+
+# RESPONSE
+
+# {
+#   "added": {
+#     "_id": "61eea6c8b33e265e3b964233",
+#     "visitOrders": [],
+#     "user": "61eea2256e0dcf8c5abf729b",
+#     "category": "TWO_START",
+#     "address": "123 Fake St",
+#     "email": "hotel-fake22@mail.com",
+#     "description": "hotel 2 description",
+#     "name": "Hotel 2",
+#     "createdAt": "2022-01-24T13:16:56.151Z",
+#     "updatedAt": "2022-01-24T13:16:56.151Z",
+#     "__v": 0
+#   }
+# }
+
+### get user favorites
+
+GET http://localhost:4000/users/favorites
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0
+
+# RESPONSE
+
+# {
+#   "_id": "61eea2256e0dcf8c5abf729b",
+#   "role": "SELLER",
+#   "email": "user1@gmail.com",
+#   "name": "user1",
+#   "__v": 2,
+#   "favorites": [
+#     {
+#       "_id": "61eea6c8b33e265e3b964233",
+#       "visitOrders": [],
+#       "user": "61eea2256e0dcf8c5abf729b",
+#       "category": "TWO_START",
+#       "address": "123 Fake St",
+#       "email": "hotel-fake22@mail.com",
+#       "description": "hotel 2 description",
+#       "name": "Hotel 2",
+#       "createdAt": "2022-01-24T13:16:56.151Z",
+#       "updatedAt": "2022-01-24T13:16:56.151Z",
+#       "__v": 0
+#     },
+#     {
+#       "_id": "61eea58154e050bb22907771",
+#       "visitOrders": [],
+#       "user": "61eea2256e0dcf8c5abf729b",
+#       "category": "FIVE_START",
+#       "address": "123 Fake St",
+#       "email": "hotel-fake@mail.com",
+#       "description": "hotel 1 description",
+#       "name": "Hotel 1",
+#       "createdAt": "2022-01-24T13:11:29.514Z",
+#       "updatedAt": "2022-01-24T13:11:29.514Z",
+#       "__v": 0
+#     }
+#   ]
+# }
+
+### DELETE ONE HOTEL FROM USER FAVORITES
+
+DELETE http://localhost:4000/users/delete-favorite/61eea6c8b33e265e3b964233
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0
+
+# RESPONSE
+
+# {
+#   "removed": {
+#     "_id": "61eea58154e050bb22907771",
+#     "visitOrders": [],
+#     "user": "61eea2256e0dcf8c5abf729b",
+#     "category": "FIVE_START",
+#     "address": "123 Fake St",
+#     "email": "hotel-fake@mail.com",
+#     "description": "hotel 1 description",
+#     "name": "Hotel 1",
+#     "createdAt": "2022-01-24T13:11:29.514Z",
+#     "updatedAt": "2022-01-24T13:11:29.514Z",
+#     "__v": 0
+#   }
 # }

@@ -22,7 +22,7 @@ export class User extends Document {
   role: UserRoles;
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }])
-  favorites?: string[];
+  favorites?: any[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

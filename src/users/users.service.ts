@@ -18,6 +18,13 @@ export class UsersService {
     private userModel: mongoose.Model<User>,
   ) {}
 
+  async getFavorites(currentUser: User): Promise<User> {
+    const user = await this.userModel
+      .findOne({ _id: currentUser._id })
+      .populate('favorites');
+    return user;
+  }
+
   async addFavorite(hotelId: string, user: User): Promise<{ added: Hotel }> {
     const hotel = await this.hotelModel.findById(hotelId);
     if (!hotel) {
@@ -25,7 +32,7 @@ export class UsersService {
     }
     // buscar el user sobre el cual se va a agregar el hotel como favorito
     const userFound = await this.userModel.findById(user._id);
-    if (!userFound.favorites.includes(hotelId)) {
+    if (!userFound.favorites.map((i) => i.toString()).includes(hotelId)) {
       userFound.favorites.push(hotelId);
       await userFound.save();
       return { added: hotel };
@@ -41,9 +48,17 @@ export class UsersService {
     }
     // buscar el user sobre el cual se va a agregar el hotel como favorito
     const userFound = await this.userModel.findById(user._id);
-    if (userFound.favorites.includes(hotelId)) {
+
+    if (userFound.favorites.map((i) => i.toString()).includes(hotelId)) {
       // se filtra del array de favoritos si ese hotelId ya exisitia en favoritos
-      userFound.favorites.filter((id) => id !== hotelId);
+
+      const filtered = userFound.favorites
+        .map((i) => i.toString())
+        .filter((id) => id !== hotelId);
+
+      // se actualiza el array de favoritos
+      userFound.favorites = filtered;
+
       await userFound.save();
       return { removed: hotel };
     }
