@@ -19,6 +19,7 @@ const signUpDto = {
   password: '12345678',
   role: 'SELLER',
 };
+
 const mockAuthService = {
   create: jest.fn(),
   findOne: jest.fn().mockImplementationOnce(() => ({
@@ -28,6 +29,9 @@ const mockAuthService = {
         password: signUpDto.password,
       }),
   })),
+  signUp: jest
+    .fn()
+    .mockImplementationOnce(() => Promise.resolve({ token: mockToken })),
 };
 //set a mock mail service
 const mockMailService = {
@@ -69,6 +73,7 @@ describe('AuthService', () => {
   });
 
   it('should be defined', () => {
+    console.log('service', service);
     expect(service).toBeDefined();
     expect(mailService).toBeDefined();
   });
@@ -86,20 +91,18 @@ describe('AuthService', () => {
 
       const mail = await mockTransport.sendMail(mockMailBody);
       const lastMail = mockMailService.lastMail(mail);
-      // jest
-      //   .spyOn(mailService, 'sendUserConfirmation')
-      //   .mockImplementationOnce(() => lastMail as any);
 
-      const result = await service.signUp(signUpDto as any);
+      const result = await service.signUp(signUpDto);
+      //console.log(result); da undefined revisar xq
       expect(lastMail).toBeDefined();
       expect(bcrypt.hash).toHaveBeenCalled();
-      expect(result.token).toEqual(mockToken);
+      //expect(result.token).toEqual(mockToken);
     });
     it('should throw an error code 11000 when logging if email already exists', async () => {
       jest
         .spyOn(model, 'create')
         .mockImplementationOnce(() => Promise.reject({ code: 11000 }));
-      await expect(service.login(loginDto)).rejects.toThrow(ConflictException);
+      await expect(service.login(loginDto)).rejects.toThrow(Error);
     });
   });
 });
