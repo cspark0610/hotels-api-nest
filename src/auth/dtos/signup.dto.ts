@@ -1,4 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { UserRoles } from '../schemas/user.schema';
 
 export class SignUpDto {
@@ -17,5 +23,6 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly role: UserRoles.USER | UserRoles.SELLER;
+  @IsEnum(UserRoles, { message: 'please enter USER or SELLER' })
+  readonly role: string;
 }

@@ -31,6 +31,12 @@ export class Hotel extends Document {
   @Prop()
   category: Category;
 
+  @Prop()
+  price: number;
+
+  @Prop({ default: false })
+  isSold: boolean;
+
   @Prop({ type: Object, ref: 'Location' })
   location?: Location;
 

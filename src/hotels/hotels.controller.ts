@@ -17,7 +17,7 @@ import { UpdateHotelDto } from './dtos/update-hotel.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { User, UserRoles } from '../auth/schemas/user.schema';
+import { User } from '../auth/schemas/user.schema';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 
@@ -49,7 +49,7 @@ export class HotelsController {
   @UseGuards(AuthGuard())
   async updateHotel(
     @Param('id') id: string,
-    @Body() hotel: UpdateHotelDto,
+    @Body() updateHotelBody: UpdateHotelDto,
     @CurrentUser() user: User,
   ): Promise<Hotel> {
     const response = await this.hotelsService.findById(id);
@@ -59,7 +59,7 @@ export class HotelsController {
         'You are not allowed to update this hotel becuase you are not the owner',
       );
     }
-    return this.hotelsService.updateById(id, hotel as any);
+    return this.hotelsService.updateById(id, updateHotelBody);
   }
 
   @Delete('/:id')

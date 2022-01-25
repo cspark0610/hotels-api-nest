@@ -11,6 +11,7 @@ const signUpDto = {
   email: 'user1@mail.com',
   name: 'namefake',
   password: '12345678',
+  role: 'SELLER',
 };
 const loginDto = { email: signUpDto.email, password: signUpDto.password };
 

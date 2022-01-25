@@ -19,10 +19,13 @@ export class User extends Document {
   password: string;
 
   @Prop({ enum: UserRoles, default: UserRoles.USER })
-  role: UserRoles;
+  role: string;
 
   @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }])
   favorites?: any[];
+
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }])
+  hotelPurchases?: any[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

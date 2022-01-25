@@ -1,4 +1,11 @@
-import { IsEmail, IsEmpty, IsEnum, IsNotEmpty } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEmpty,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+} from 'class-validator';
 import { User } from '../../auth/schemas/user.schema';
 import { Category } from '../schemas/hotel.schema';
 
@@ -19,6 +26,14 @@ export class CreateHotelDto {
   @IsNotEmpty()
   @IsEnum(Category, { message: 'please enter the correct category' })
   readonly category: Category;
+
+  @IsNotEmpty()
+  @IsNumber()
+  price: number;
+
+  @IsNotEmpty()
+  @IsBoolean({ message: 'please enter a boolean value' })
+  isSold: boolean;
 
   @IsEmpty({ message: 'you can provide the user ID' })
   readonly user: User;

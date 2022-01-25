@@ -1,4 +1,11 @@
-import { IsEmail, IsEmpty, IsEnum, IsOptional } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEmpty,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 import { User } from '../../auth/schemas/user.schema';
 import { Category } from '../schemas/hotel.schema';
 
@@ -14,9 +21,6 @@ export class UpdateHotelDto {
   readonly email: string;
 
   @IsOptional()
-  readonly phone: number;
-
-  @IsOptional()
   readonly address: string;
 
   @IsOptional()
@@ -24,7 +28,12 @@ export class UpdateHotelDto {
   readonly category: Category;
 
   @IsOptional()
-  readonly images?: object[];
+  @IsNumber()
+  price: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isSold: boolean;
 
   @IsEmpty({ message: 'you can provide the user ID' })
   readonly user: User;

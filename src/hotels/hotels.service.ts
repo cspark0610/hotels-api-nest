@@ -58,11 +58,15 @@ export class HotelsService {
     return hotel;
   }
 
-  async updateById(id: string, hotel: Hotel): Promise<Hotel> {
-    const updatedHotel = await this.hotelModel.findByIdAndUpdate(id, hotel, {
-      new: true,
-      runValidators: true,
-    });
+  async updateById(id: string, updateHotelBody): Promise<Hotel> {
+    const updatedHotel = await this.hotelModel.findByIdAndUpdate(
+      id,
+      updateHotelBody,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
     return updatedHotel;
   }
 

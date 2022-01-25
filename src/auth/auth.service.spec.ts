@@ -9,14 +9,43 @@ import { mockUser, mockToken } from '../constants/mock.contants';
 import APIFeatures from '../utils/apiFeatures.util';
 import { ConflictException } from '@nestjs/common';
 import { MailService } from '../mail/mail.service';
+import * as nodeMailerStub from 'nodemailer-stub';
+import { stubTransport } from 'nodemailer-stub';
+import * as nodeMailer from 'nodemailer';
 
+const signUpDto = {
+  email: 'user1@mail.com',
+  name: 'namefake',
+  password: '12345678',
+  role: 'SELLER',
+};
 const mockAuthService = {
   create: jest.fn(),
+  findOne: jest.fn().mockImplementationOnce(() => ({
+    select: () =>
+      jest.fn().mockReturnValue({
+        email: signUpDto.email,
+        password: signUpDto.password,
+      }),
+  })),
 };
 //set a mock mail service
-const mockMailService = {};
+const mockMailService = {
+  lastMail: jest
+    .fn()
+    .mockImplementationOnce(() => nodeMailerStub.interactsWithMail.lastMail()),
+};
+const mockMailBody = {
+  from: 'from@domain.com',
+  to: 'user1@mail.com',
+  subject: 'Nodemailer stub works!',
+  text: 'Wohoo',
+};
+const mockTransport = nodeMailer.createTransport(stubTransport);
+
 describe('AuthService', () => {
   let service: AuthService;
+  let mailService: MailService;
   let model: Model<User>;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -35,20 +64,16 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
+    mailService = module.get<MailService>(MailService);
     model = module.get<Model<User>>(getModelToken(User.name));
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(mailService).toBeDefined();
   });
 
   describe('signUp', () => {
-    const signUpDto = {
-      email: 'user1@mail.com',
-      name: 'namefake',
-      password: '12345678',
-      role: 'SELLER',
-    };
     const loginDto = { email: signUpDto.email, password: signUpDto.password };
     it('should resgister a new user', async () => {
       jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce('test-hashed-password');
@@ -58,7 +83,15 @@ describe('AuthService', () => {
       jest
         .spyOn(APIFeatures, 'assignJwtToken')
         .mockResolvedValueOnce(mockToken); // jwtToken
+
+      const mail = await mockTransport.sendMail(mockMailBody);
+      const lastMail = mockMailService.lastMail(mail);
+      // jest
+      //   .spyOn(mailService, 'sendUserConfirmation')
+      //   .mockImplementationOnce(() => lastMail as any);
+
       const result = await service.signUp(signUpDto as any);
+      expect(lastMail).toBeDefined();
       expect(bcrypt.hash).toHaveBeenCalled();
       expect(result.token).toEqual(mockToken);
     });
