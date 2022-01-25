@@ -19,16 +19,17 @@ describe('AuthController (e2e)', () => {
     name: 'test',
     email: 'email1@gmail.com',
     password: '123456789',
+    role: 'SELLER',
   };
   const newHotel = {
     name: 'Hotel new',
     description: 'Hotel new description',
     email: 'fake@gmail.com',
-    address: '123 Fake St',
+    address: 'Calle El Alcalde No. 15, Las Condes Santiago, . CL',
     category: 'TWO_START',
     location: {},
     user: '61cd5ekcsv66945x1wc',
-    _id: '61cd5ekcsv66945x1wc',
+    _id: new mongoose.Types.ObjectId(),
   };
 
   afterAll(() => mongoose.disconnect());
@@ -45,7 +46,6 @@ describe('AuthController (e2e)', () => {
   });
 
   it('(POST), /hotels route create a new hotel', async () => {
-    console.log('jwtToken', jwtToken);
     return request(app.getHttpServer())
       .post('/hotels')
       .set('Authorization', 'Bearer ' + jwtToken)
@@ -54,7 +54,6 @@ describe('AuthController (e2e)', () => {
       .expect(201)
       .then((res) => {
         hotelCreated = res.body;
-        console.log(hotelCreated);
         expect(res.body._id).toBeDefined();
         expect(res.body.name).toEqual(newHotel.name);
       });
@@ -65,7 +64,7 @@ describe('AuthController (e2e)', () => {
       .get('/hotels')
       .expect(200)
       .then((res) => {
-        expect(res.body.length).toBe(1);
+        expect(res.body.length).toBeGreaterThan(0);
       });
   });
 
