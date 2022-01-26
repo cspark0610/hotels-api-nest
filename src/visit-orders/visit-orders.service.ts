@@ -90,8 +90,8 @@ export class VisitOrdersService {
       visitOrderId,
     );
     const hotel = await this.hotelModel.findById(deletedVisitOrder.hotelId);
-    hotel.visitOrders.filter(
-      (visitOrder) => visitOrder.toString() != visitOrderId,
+    hotel.visitOrders = hotel.visitOrders.filter(
+      (visitOrder) => visitOrder.toString() !== visitOrderId,
     );
     await hotel.save();
 
