@@ -56,4 +56,10 @@ export class UsersController {
     }
     return this.usersService.addPurchase(hotelId, currentUser);
   }
+
+  @Get('purchases')
+  @UseGuards(AuthGuard())
+  async getHotelPurchases(@CurrentUser() currentUser: User) {
+    return this.usersService.getPurchases(currentUser);
+  }
 }

@@ -1,5 +1,4 @@
 import {
-  IsBoolean,
   IsEmail,
   IsEmpty,
   IsEnum,
@@ -31,8 +30,6 @@ export class CreateHotelDto {
   @IsNumber()
   price: number;
 
-  @IsNotEmpty()
-  @IsBoolean({ message: 'please enter a boolean value' })
   isSold: boolean;
 
   @IsEmpty({ message: 'you can provide the user ID' })

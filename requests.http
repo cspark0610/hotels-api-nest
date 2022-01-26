@@ -16,8 +16,15 @@ Content-Type: application/json
   "email": "user1@gmail.com",
   "password": "12345678"
 }
+###
 
+GET http://localhost:4000/auth/login
+Content-Type: application/json
 
+{
+  "email": "parkcarlosseb@gmail.com",
+  "password": "123456789"
+}
 
 
 ### RESPONSE
@@ -26,43 +33,35 @@ Content-Type: application/json
 # }
 
 POST http://localhost:4000/hotels
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzIxMDAzOCwiZXhwIjoxNjQzMjk2NDM4fQ.0hAIBFLeOpJPHe9aLG83iINaap7wUiThU6_WnoRSs5M
 Content-Type: application/json
 
 {
-  "name": "Hotel 1",
-  "description": "hotel 1 description",
-  "email": "hotel-fake@mail.com",
+  "name": "Hotel 2",
+  "description": "hotel 2 description",
+  "email": "hotel-falso2@gmail.com",
   "address": "123 Fake St",
-  "category": "FIVE_START"  
+  "category": "TWO_START", 
+  "price": 950000
 }
 
 ### RESPONSE
 # {
 #   "visitOrders": [],
 #   "user": "61eea2256e0dcf8c5abf729b",
-#   "category": "FIVE_START",
+#   "isSold": false,
+#   "price": 950000,
+#   "category": "TWO_START",
 #   "address": "123 Fake St",
-#   "email": "hotel-fake@mail.com",
-#   "description": "hotel 1 description",
-#   "name": "Hotel 1",
-#   "_id": "61eea58154e050bb22907771",
-#   "createdAt": "2022-01-24T13:11:29.514Z",
-#   "updatedAt": "2022-01-24T13:11:29.514Z",
+#   "email": "hotel-falso2@gmail.com",
+#   "description": "hotel 2 description",
+#   "name": "Hotel 2",
+#   "_id": "61f1664ab8e600a93c826739",
+#   "createdAt": "2022-01-26T15:18:34.593Z",
+#   "updatedAt": "2022-01-26T15:18:34.593Z",
 #   "__v": 0
 # }
 
-POST http://localhost:4000/hotels
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzAyOTAyOSwiZXhwIjoxNjQzMTE1NDI5fQ.BR3_aad3sOQ9jiQuf-vV6bHP2RTQKcROyNcbVbUwci8
-Content-Type: application/json
-
-{
-  "name": "Hotel 2",
-  "description": "hotel 2 description",
-  "email": "hotel-fake22@mail.com",
-  "address": "123 Fake St",
-  "category": "TWO_START"  
-}
 
 ###
 GET http://localhost:4000/hotels
@@ -70,79 +69,67 @@ GET http://localhost:4000/hotels
 ### RESPONSE
 # [
 #   {
-#     "_id": "61eea58154e050bb22907771",
+#     "_id": "61f165efc0cba1b25a287c4e",
 #     "visitOrders": [],
 #     "user": "61eea2256e0dcf8c5abf729b",
+#     "isSold": false,
+#     "price": 1750000,
 #     "category": "FIVE_START",
 #     "address": "123 Fake St",
 #     "email": "hotel-fake@mail.com",
 #     "description": "hotel 1 description",
 #     "name": "Hotel 1",
-#     "createdAt": "2022-01-24T13:11:29.514Z",
-#     "updatedAt": "2022-01-24T13:11:29.514Z",
+#     "createdAt": "2022-01-26T15:17:03.184Z",
+#     "updatedAt": "2022-01-26T15:17:03.184Z",
 #     "__v": 0
 #   },
 #   {
-#     "_id": "61eea6c8b33e265e3b964233",
+#     "_id": "61f1664ab8e600a93c826739",
 #     "visitOrders": [],
 #     "user": "61eea2256e0dcf8c5abf729b",
+#     "isSold": false,
+#     "price": 950000,
 #     "category": "TWO_START",
 #     "address": "123 Fake St",
-#     "email": "hotel-fake22@mail.com",
+#     "email": "hotel-falso2@gmail.com",
 #     "description": "hotel 2 description",
 #     "name": "Hotel 2",
-#     "createdAt": "2022-01-24T13:16:56.151Z",
-#     "updatedAt": "2022-01-24T13:16:56.151Z",
+#     "createdAt": "2022-01-26T15:18:34.593Z",
+#     "updatedAt": "2022-01-26T15:18:34.593Z",
 #     "__v": 0
 #   }
 # ]
 
-GET http://localhost:4000/hotels/61eea6c8b33e265e3b964233
-
-### RESPONSE
-
-# {
-#   "_id": "61eea6c8b33e265e3b964233",
-#   "visitOrders": [],
-#   "user": "61eea2256e0dcf8c5abf729b",
-#   "category": "TWO_START",
-#   "address": "123 Fake St",
-#   "email": "hotel-fake22@mail.com",
-#   "description": "hotel 2 description",
-#   "name": "Hotel 2",
-#   "createdAt": "2022-01-24T13:16:56.151Z",
-#   "updatedAt": "2022-01-24T13:16:56.151Z",
-#   "__v": 0
-# }
-
 ### ADD ONE HOTEL TO USER FAVORITES
-
-POST http://localhost:4000/users/add-favorite/61eea58154e050bb22907771
+# POST => users/add-favorite/:idHotel
+POST http://localhost:4000/users/add-favorite/61f165efc0cba1b25a287c4e
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0  
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzIxMDAzOCwiZXhwIjoxNjQzMjk2NDM4fQ.0hAIBFLeOpJPHe9aLG83iINaap7wUiThU6_WnoRSs5M
 
 # RESPONSE
 
 # {
 #   "added": {
-#     "_id": "61eea6c8b33e265e3b964233",
+#     "_id": "61f1664ab8e600a93c826739",
 #     "visitOrders": [],
 #     "user": "61eea2256e0dcf8c5abf729b",
+#     "isSold": false,
+#     "price": 950000,
 #     "category": "TWO_START",
 #     "address": "123 Fake St",
-#     "email": "hotel-fake22@mail.com",
+#     "email": "hotel-falso2@gmail.com",
 #     "description": "hotel 2 description",
 #     "name": "Hotel 2",
-#     "createdAt": "2022-01-24T13:16:56.151Z",
-#     "updatedAt": "2022-01-24T13:16:56.151Z",
+#     "createdAt": "2022-01-26T15:18:34.593Z",
+#     "updatedAt": "2022-01-26T15:18:34.593Z",
 #     "__v": 0
 #   }
 # }
 
 ### get user favorites
-
+# GET => users/favorites
 GET http://localhost:4000/users/favorites
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzIxMDAzOCwiZXhwIjoxNjQzMjk2NDM4fQ.0hAIBFLeOpJPHe9aLG83iINaap7wUiThU6_WnoRSs5M
 
 # RESPONSE
 
@@ -151,35 +138,40 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1N
 #   "role": "SELLER",
 #   "email": "user1@gmail.com",
 #   "name": "user1",
-#   "__v": 2,
+#   "__v": 5,
 #   "favorites": [
 #     {
-#       "_id": "61eea6c8b33e265e3b964233",
+#       "_id": "61f1664ab8e600a93c826739",
 #       "visitOrders": [],
 #       "user": "61eea2256e0dcf8c5abf729b",
+#       "isSold": false,
+#       "price": 950000,
 #       "category": "TWO_START",
 #       "address": "123 Fake St",
-#       "email": "hotel-fake22@mail.com",
+#       "email": "hotel-falso2@gmail.com",
 #       "description": "hotel 2 description",
 #       "name": "Hotel 2",
-#       "createdAt": "2022-01-24T13:16:56.151Z",
-#       "updatedAt": "2022-01-24T13:16:56.151Z",
+#       "createdAt": "2022-01-26T15:18:34.593Z",
+#       "updatedAt": "2022-01-26T15:18:34.593Z",
 #       "__v": 0
 #     },
 #     {
-#       "_id": "61eea58154e050bb22907771",
+#       "_id": "61f165efc0cba1b25a287c4e",
 #       "visitOrders": [],
 #       "user": "61eea2256e0dcf8c5abf729b",
+#       "isSold": false,
+#       "price": 1750000,
 #       "category": "FIVE_START",
 #       "address": "123 Fake St",
 #       "email": "hotel-fake@mail.com",
 #       "description": "hotel 1 description",
 #       "name": "Hotel 1",
-#       "createdAt": "2022-01-24T13:11:29.514Z",
-#       "updatedAt": "2022-01-24T13:11:29.514Z",
+#       "createdAt": "2022-01-26T15:17:03.184Z",
+#       "updatedAt": "2022-01-26T15:17:03.184Z",
 #       "__v": 0
 #     }
-#   ]
+#   ],
+#   "hotelPurchases": []
 # }
 
 ### DELETE ONE HOTEL FROM USER FAVORITES
@@ -204,4 +196,62 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1N
 #     "updatedAt": "2022-01-24T13:11:29.514Z",
 #     "__v": 0
 #   }
+# }
+
+
+### PURCHASE ONE HOTEL
+#POST => users/purchase/:idHotel
+POST http://localhost:4000/users/purchase-hotel/61f1664ab8e600a93c826739
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVmYjQ2NGEwZDc2NDdkODcwNDE4NSIsImlhdCI6MTY0MzIxMDk5MSwiZXhwIjoxNjQzMjk3MzkxfQ.o-rpp7HcMCOOakQIqGdqAn1yZ5gJLhw4a9opYdfvsf4
+
+# RESPONSE
+# {
+#   "purchased": {
+#     "_id": "61f1664ab8e600a93c826739",
+#     "visitOrders": [],
+#     "user": "61eea2256e0dcf8c5abf729b",
+#     "isSold": false,
+#     "price": 950000,
+#     "category": "TWO_START",
+#     "address": "123 Fake St",
+#     "email": "hotel-falso2@gmail.com",
+#     "description": "hotel 2 description",
+#     "name": "Hotel 2",
+#     "createdAt": "2022-01-26T15:18:34.593Z",
+#     "updatedAt": "2022-01-26T15:18:34.593Z",
+#     "__v": 0
+#   }
+# }
+
+### GET USER PURCHASES
+#GET => users/purchases
+GET http://localhost:4000/users/purchases
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVmYjQ2NGEwZDc2NDdkODcwNDE4NSIsImlhdCI6MTY0MzIxMDk5MSwiZXhwIjoxNjQzMjk3MzkxfQ.o-rpp7HcMCOOakQIqGdqAn1yZ5gJLhw4a9opYdfvsf4
+
+# {
+#   "_id": "61eefb464a0d7647d8704185",
+#   "favorites": [],
+#   "role": "SELLER",
+#   "email": "parkcarlosseb@gmail.com",
+#   "name": "carlos park",
+#   "__v": 1,
+#   "hotelPurchases": [
+#     {
+#       "_id": "61f1664ab8e600a93c826739",
+#       "visitOrders": [],
+#       "user": "61eea2256e0dcf8c5abf729b",
+#       "isSold": true,
+#       "price": 950000,
+#       "category": "TWO_START",
+#       "address": "123 Fake St",
+#       "email": "hotel-falso2@gmail.com",
+#       "description": "hotel 2 description",
+#       "name": "Hotel 2",
+#       "createdAt": "2022-01-26T15:18:34.593Z",
+#       "updatedAt": "2022-01-26T15:30:32.706Z",
+#       "__v": 0
+#     }
+#   ]
 # }

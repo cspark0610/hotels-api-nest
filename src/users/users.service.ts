@@ -20,6 +20,12 @@ export class UsersService {
       .populate('favorites');
     return user;
   }
+  async getPurchases(currentUser: User): Promise<User> {
+    const user = await this.userModel
+      .findOne({ _id: currentUser._id })
+      .populate('hotelPurchases');
+    return user;
+  }
 
   async addFavorite(hotelId: string, user: User): Promise<{ added: Hotel }> {
     const hotel = await this.hotelModel.findById(hotelId);
