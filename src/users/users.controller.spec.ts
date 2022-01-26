@@ -4,6 +4,8 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import * as mongoose from 'mongoose';
 import { mockUser, mockHotel } from '../constants/mock.contants';
+import { HotelsService } from '../hotels/hotels.service';
+import { ForbiddenException } from '@nestjs/common';
 
 const mockAddedHotel = { ...mockHotel };
 const mockRemovedHotel = { ...mockHotel };
@@ -13,10 +15,16 @@ const mockUsersService = {
   removeFavorite: jest
     .fn()
     .mockResolvedValueOnce({ removed: mockRemovedHotel }),
+  addPurchase: jest.fn().mockResolvedValueOnce({ purchased: mockHotel }),
 };
+const mockHotelsService = {
+  findById: jest.fn().mockResolvedValueOnce(mockHotel),
+};
+
 describe('UsersController', () => {
   let controller: UsersController;
-  let service: UsersService;
+  let usersService: UsersService;
+  let hotelsService: HotelsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,16 +33,20 @@ describe('UsersController', () => {
       providers: [
         UsersService,
         { provide: UsersService, useValue: mockUsersService },
+        HotelsService,
+        { provide: HotelsService, useValue: mockHotelsService },
       ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
-    service = module.get<UsersService>(UsersService);
+    usersService = module.get<UsersService>(UsersService);
+    hotelsService = module.get<HotelsService>(HotelsService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-    expect(service).toBeDefined();
+    expect(usersService).toBeDefined();
+    expect(hotelsService).toBeDefined();
   });
 
   describe('addHotelToFavorites', () => {
@@ -44,7 +56,7 @@ describe('UsersController', () => {
         hotelId,
         mockUser as any,
       );
-      expect(service.addFavorite).toHaveBeenCalled();
+      expect(usersService.addFavorite).toHaveBeenCalled();
       expect(result).toBeInstanceOf(Object);
       expect(result.added).toMatchObject(mockAddedHotel);
     });
@@ -57,9 +69,34 @@ describe('UsersController', () => {
         hotelId,
         mockUser as any,
       );
-      expect(service.removeFavorite).toHaveBeenCalled();
+      expect(usersService.removeFavorite).toHaveBeenCalled();
       expect(result).toBeInstanceOf(Object);
       expect(result.removed).toMatchObject(mockRemovedHotel);
+    });
+  });
+
+  describe('addPurchaseHotelToUser', () => {
+    it('should call addPurchase service', async () => {
+      const anyMockUser = {
+        ...mockUser,
+        _id: new mongoose.Types.ObjectId().toString(),
+      };
+      const hotelId = new mongoose.Types.ObjectId().toString();
+      const result = await controller.addPurchaseHotelToUser(
+        hotelId,
+        anyMockUser as any,
+      );
+      expect(hotelsService.findById).toHaveBeenCalled();
+      expect(usersService.addPurchase).toHaveBeenCalled();
+      expect(result).toBeInstanceOf(Object);
+      expect(result.purchased).toMatchObject(mockAddedHotel);
+    });
+    it('should throw forbidden error when purchasing its own hotel', async () => {
+      const hotelId = new mongoose.Types.ObjectId().toString();
+
+      await expect(
+        controller.addPurchaseHotelToUser(hotelId, mockUser as any),
+      ).rejects.toThrow(ForbiddenException);
     });
   });
 });
