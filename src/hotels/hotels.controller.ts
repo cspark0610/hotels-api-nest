@@ -8,7 +8,9 @@ import {
   Post,
   Put,
   Query,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateHotelDto } from './dtos/create-hotel.dto';
 import { HotelsService } from './hotels.service';
@@ -20,6 +22,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { User } from '../auth/schemas/user.schema';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('hotels')
 export class HotelsController {
@@ -72,11 +75,33 @@ export class HotelsController {
 
     if (resHotel.user.toString() !== user._id.toString()) {
       throw new ForbiddenException(
-        'You are not allowed to update this hotel becuase you are not the owner',
+        'You are not allowed to delete this hotel because you are not the owner',
       );
     }
 
-    const hotel = this.hotelsService.deleteById(id);
-    return { deleted: !!hotel };
+    const isImagesDeleted = await this.hotelsService.deleteImages(
+      resHotel.images,
+    );
+    if (isImagesDeleted) {
+      this.hotelsService.deleteById(id);
+      return { deleted: true };
+    }
+    return { deleted: false };
+  }
+
+  //edit hotel images array
+  @Put('upload/:id')
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadFiles(
+    @Param('id') id: string,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<Hotel> {
+    console.log('files', files);
+    console.log('id', id);
+
+    await this.hotelsService.findById(id);
+
+    const response = await this.hotelsService.uploadImages(id, files);
+    return response;
   }
 }

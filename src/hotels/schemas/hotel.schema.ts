@@ -40,6 +40,9 @@ export class Hotel extends Document {
   @Prop({ type: Object, ref: 'Location' })
   location?: Location;
 
+  @Prop()
+  images?: object[];
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 

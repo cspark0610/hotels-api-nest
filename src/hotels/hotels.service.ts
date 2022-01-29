@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { S3 } from 'aws-sdk';
 import { Query } from 'express-serve-static-core';
 import * as mongoose from 'mongoose';
 import { User } from '../auth/schemas/user.schema';
@@ -72,5 +73,27 @@ export class HotelsService {
 
   async deleteById(id: string): Promise<Hotel> {
     return await this.hotelModel.findByIdAndDelete(id);
+  }
+
+  async uploadImages(
+    id: string,
+    files: Array<Express.Multer.File>,
+  ): Promise<Hotel> {
+    const images = await APIFeatures.uploadImagesToS3(files);
+
+    const hotelUpdated = await this.hotelModel.findByIdAndUpdate(
+      id,
+      { images: images as object[] },
+      { new: true, runValidators: true },
+    );
+
+    console.log(images);
+    return hotelUpdated;
+  }
+
+  async deleteImages(images): Promise<true | void | S3.DeleteObjectOutput> {
+    if (images.length === 0) return true;
+    const res = await APIFeatures.deleteImagesFromS3(images);
+    return res;
   }
 }

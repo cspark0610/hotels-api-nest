@@ -38,13 +38,14 @@ export const mockLoginDto = {
   email: 'user1@mail.com',
   password: '12345678',
 };
+const newId: string = new mongoose.Types.ObjectId().toString();
 export const mockVisitOrder = {
-  _id: new mongoose.Types.ObjectId().toString(),
+  _id: newId,
   visitDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3),
   aditionalInfo: 'additional info',
   phoneContact: 123456789,
-  hotelId: new mongoose.Types.ObjectId().toString(),
-  userId: new mongoose.Types.ObjectId().toString(),
+  hotelId: newId,
+  userId: newId,
 };
 
 export const mockNotFoundException = new NotFoundException(
