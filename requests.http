@@ -2,23 +2,23 @@ POST http://localhost:4000/auth/signUp
 Content-Type: application/json
 
 {
-  "name": "user1",
-  "email": "user1@gmail.com",
+  "name": "user34",
+  "email": "user34@gmail.com",
   "password": "12345678",
-  "role": "SELLER"
+  "role": "USER"
 }
 ### login
 
-GET http://localhost:4000/auth/login
+POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user1@gmail.com",
+  "email": "user34@gmail.com",
   "password": "12345678"
 }
 ###
 
-GET http://localhost:4000/auth/login
+POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
@@ -33,16 +33,16 @@ Content-Type: application/json
 # }
 
 POST http://localhost:4000/hotels
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzIxMDAzOCwiZXhwIjoxNjQzMjk2NDM4fQ.0hAIBFLeOpJPHe9aLG83iINaap7wUiThU6_WnoRSs5M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzI5MjQ0MywiZXhwIjoxNjQzMzc4ODQzfQ.ovFSIKnzGxCQnVCqKJS_49MnLiY1F1_yWScFOohbJjU
 Content-Type: application/json
 
 {
-  "name": "Hotel 2",
-  "description": "hotel 2 description",
-  "email": "hotel-falso2@gmail.com",
+  "name": "Hotel 3",
+  "description": "hotel 3 description",
+  "email": "hotel-falso3@gmail.com",
   "address": "123 Fake St",
   "category": "TWO_START", 
-  "price": 950000
+  "price": 1250000
 }
 
 ### RESPONSE
@@ -104,7 +104,7 @@ GET http://localhost:4000/hotels
 # POST => users/add-favorite/:idHotel
 POST http://localhost:4000/users/add-favorite/61f165efc0cba1b25a287c4e
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzIxMDAzOCwiZXhwIjoxNjQzMjk2NDM4fQ.0hAIBFLeOpJPHe9aLG83iINaap7wUiThU6_WnoRSs5M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjJhN2I4NDU2NGM1MzVjYTJkN2ZhMCIsImlhdCI6MTY0MzI5MjY3OSwiZXhwIjoxNjQzMzc5MDc5fQ.oGtnhCiK_5WSpO7w8XU0uJg5rUdiKUwEX3pVI86-t5A
 
 # RESPONSE
 
@@ -201,9 +201,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1N
 
 ### PURCHASE ONE HOTEL
 #POST => users/purchase/:idHotel
-POST http://localhost:4000/users/purchase-hotel/61f1664ab8e600a93c826739
+POST http://localhost:4000/users/purchase-hotel/61f2a7574564c535ca2d7f9a
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVmYjQ2NGEwZDc2NDdkODcwNDE4NSIsImlhdCI6MTY0MzIxMDk5MSwiZXhwIjoxNjQzMjk3MzkxfQ.o-rpp7HcMCOOakQIqGdqAn1yZ5gJLhw4a9opYdfvsf4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjJhN2I4NDU2NGM1MzVjYTJkN2ZhMCIsImlhdCI6MTY0MzI5MjY3OSwiZXhwIjoxNjQzMzc5MDc5fQ.oGtnhCiK_5WSpO7w8XU0uJg5rUdiKUwEX3pVI86-t5A
 
 # RESPONSE
 # {
@@ -228,7 +228,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVmYjQ2N
 #GET => users/purchases
 GET http://localhost:4000/users/purchases
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVmYjQ2NGEwZDc2NDdkODcwNDE4NSIsImlhdCI6MTY0MzIxMDk5MSwiZXhwIjoxNjQzMjk3MzkxfQ.o-rpp7HcMCOOakQIqGdqAn1yZ5gJLhw4a9opYdfvsf4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjJhN2I4NDU2NGM1MzVjYTJkN2ZhMCIsImlhdCI6MTY0MzI5MjY3OSwiZXhwIjoxNjQzMzc5MDc5fQ.oGtnhCiK_5WSpO7w8XU0uJg5rUdiKUwEX3pVI86-t5A
 
 # {
 #   "_id": "61eefb464a0d7647d8704185",

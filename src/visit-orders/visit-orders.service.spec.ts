@@ -17,7 +17,6 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 
 const mockHotelsService = {
   findById: jest.fn(),
-  save: jest.fn(),
 };
 const mockVisitOrdersService = {
   find: jest.fn(),
@@ -103,6 +102,7 @@ describe('VisitOrdersService', () => {
       _id: new mongoose.Types.ObjectId().toString(),
       user: '0012345678900',
       visitOrders: [],
+      save: jest.fn().mockResolvedValue(this),
     };
 
     it('should throw not found exception if id hotel passed is wrong', async () => {
@@ -128,13 +128,13 @@ describe('VisitOrdersService', () => {
       jest
         .spyOn(visitOrderModel, 'create')
         .mockImplementationOnce(() => Promise.resolve(mockVisitOrder) as any);
+
       const createdVisitOrder = await visitOrdersService.create(
         mockCreateDataObject as any,
         mockUser as any,
       );
-      // console.log('result', createdVisitOrder);
-      // console.log('result', mockVisitOrder);
-      hotel.visitOrders.push(createdVisitOrder);
+
+      await hotel.save();
 
       expect(createdVisitOrder).toBeInstanceOf(Object);
       expect(createdVisitOrder).toMatchObject(mockVisitOrder);
@@ -168,6 +168,8 @@ describe('VisitOrdersService', () => {
       ...mockHotel,
       _id: new mongoose.Types.ObjectId().toString(),
       visitOrders: ['123456'],
+      //para poder mockear la parte de "await hotel.save()"
+      save: jest.fn().mockResolvedValue(this),
     };
     it('should delete a visit order if id passed is valid', async () => {
       jest
@@ -177,14 +179,12 @@ describe('VisitOrdersService', () => {
         .spyOn(visitOrderModel, 'findByIdAndDelete')
         .mockImplementationOnce(() => Promise.resolve(deleteResult) as any);
       const result = await visitOrdersService.deleteById(visitOrder._id);
-      const filtered = hotel.visitOrders.filter(
-        (item) => item !== visitOrder._id,
-      );
-      // falta mockear esta parte await hotel.save();
+
+      await hotel.save();
 
       expect(result).toBeInstanceOf(Object);
       expect(result.deleted).toBe(true);
-      //expect(hotel.visitOrders.length).toBe(0);
+      expect(hotel.visitOrders.length).toBe(0);
     });
   });
 });
