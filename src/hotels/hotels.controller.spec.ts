@@ -12,6 +12,8 @@ const mockHotelsService = {
   findById: jest.fn().mockResolvedValueOnce(mockHotel),
   updateById: jest.fn(),
   deleteById: jest.fn().mockResolvedValueOnce({ deleted: true }),
+  deleteImages: jest.fn(),
+  uploadImages: jest.fn(),
 };
 
 describe('HotelsController', () => {
@@ -74,11 +76,14 @@ describe('HotelsController', () => {
 
       mockHotelsService.updateById = jest.fn().mockResolvedValueOnce(hotel);
 
+      mockHotelsService.deleteImages = jest.fn().mockResolvedValueOnce(true);
+
       const result = await controller.updateHotel(
         hotel._id,
         updateBody as any,
         mockUser as any,
       );
+
       expect(service.updateById).toHaveBeenCalled();
       expect(result).toEqual(hotel);
       expect(result.name).toEqual(hotel.name);
@@ -102,6 +107,43 @@ describe('HotelsController', () => {
       );
       expect(service.deleteById).toHaveBeenCalled();
       expect(result).toEqual({ deleted: true });
+    });
+  });
+
+  describe('uploadFiles', () => {
+    it('should upload hotels files images', async () => {
+      const image1 = {
+        ETag: '',
+        Location:
+          'https://hotels-api-bucket.s3.amazonaws.com/hotels/image1.jepg',
+        key: 'hotels/image1.jepg',
+        Key: 'hotels/image1.jepg',
+        Bucket: 'hotels-api-bucket',
+      };
+
+      const mockImages = [image1];
+      const updatedHotel = {
+        ...mockHotel,
+        images: mockImages,
+        _id: new mongoose.Types.ObjectId().toString(),
+      };
+      const files = [
+        {
+          fieldname: 'files',
+          originalname: 'image1.jpeg',
+          encoding: '7bit',
+          mimetype: 'image/jpeg',
+          buffer: Buffer.from('test'),
+        },
+      ];
+
+      mockHotelsService.uploadImages = jest
+        .fn()
+        .mockResolvedValueOnce(updatedHotel);
+      const result = await controller.uploadFiles(mockHotel._id, files as any);
+
+      expect(service.uploadImages).toHaveBeenCalled();
+      expect(result).toEqual(updatedHotel);
     });
   });
 });

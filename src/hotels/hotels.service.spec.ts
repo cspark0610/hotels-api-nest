@@ -122,4 +122,62 @@ describe('HotelsService', () => {
       expect(result.deleted).toBe(true);
     });
   });
+
+  describe('upload images correctly', () => {
+    it('should upload images correctly on S3 bucket', async () => {
+      const image1 = {
+        ETag: '',
+        Location:
+          'https://hotels-api-bucket.s3.amazonaws.com/hotels/image1.jepg',
+        key: 'hotels/image1.jepg',
+        Key: 'hotels/image1.jepg',
+        Bucket: 'hotels-api-bucket',
+      };
+
+      const mockImages = [image1];
+      const updatedHotel = {
+        ...mockHotel,
+        images: mockImages,
+        _id: new mongoose.Types.ObjectId().toString(),
+      };
+      jest
+        .spyOn(APIFeatures, 'uploadImagesToS3')
+        .mockResolvedValueOnce(mockImages);
+
+      jest
+        .spyOn(model, 'findByIdAndUpdate')
+        .mockResolvedValueOnce(updatedHotel as any);
+      const files = [
+        {
+          fieldname: 'files',
+          originalname: 'image1.jpeg',
+          encoding: '7bit',
+          mimetype: 'image/jpeg',
+          buffer: Buffer.from('test'),
+        },
+      ];
+      const result = await service.uploadImages(mockHotel._id, files as any);
+      expect(result).toEqual(updatedHotel);
+    });
+  });
+
+  describe('delete images', () => {
+    it('should delete images correctly from S3 bucket', async () => {
+      const mockImages = [
+        {
+          ETag: '',
+          Location:
+            'https://hotels-api-bucket.s3.amazonaws.com/hotels/image1.jepg',
+          key: 'hotels/image1.jepg',
+          Key: 'hotels/image1.jepg',
+          Bucket: 'hotels-api-bucket',
+        },
+      ];
+      jest.spyOn(APIFeatures, 'deleteImagesFromS3').mockResolvedValueOnce(true);
+
+      const result = await service.deleteImages(mockImages);
+
+      expect(result).toEqual(true);
+    });
+  });
 });
