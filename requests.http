@@ -16,6 +16,13 @@ Content-Type: application/json
   "email": "user34@gmail.com",
   "password": "12345678"
 }
+### get logged in current user profile info
+
+GET http://localhost:4000/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjJhN2I4NDU2NGM1MzVjYTJkN2ZhMCIsImlhdCI6MTY0Mzc0Nzg2OSwiZXhwIjoxNjQzODM0MjY5fQ.mo5AEmyEvoprHz--2x2wCyypmwP8g_NBo9MGDQcw_k0
+
+
 ###
 
 POST http://localhost:4000/auth/login
