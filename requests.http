@@ -2,8 +2,8 @@ POST http://localhost:4000/auth/signUp
 Content-Type: application/json
 
 {
-  "name": "user34",
-  "email": "user34@gmail.com",
+  "name": "user-nuevo",
+  "email": "user-nuevo1@gmail.com",
   "password": "12345678",
   "role": "USER"
 }
@@ -13,14 +13,20 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user34@gmail.com",
+  "email": "user-nuevo1@gmail.com",
   "password": "12345678"
 }
 ### get logged in current user profile info
 
 GET http://localhost:4000/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZjJhN2I4NDU2NGM1MzVjYTJkN2ZhMCIsImlhdCI6MTY0Mzc0Nzg2OSwiZXhwIjoxNjQzODM0MjY5fQ.mo5AEmyEvoprHz--2x2wCyypmwP8g_NBo9MGDQcw_k0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmFjMjc4NTRhNGQyZTM2YThjNTBkNCIsImlhdCI6MTY0MzgyMzc2NiwiZXhwIjoxNjQzOTEwMTY2fQ._USgmhRK_wk8m_m6aKiZ7YrCmW8jfxeHPVLZmZUd_6U
+
+
+# ### logout
+# POST http://localhost:4000/auth/logout
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmFjMjc4NTRhNGQyZTM2YThjNTBkNCIsImlhdCI6MTY0MzgyMzc2NiwiZXhwIjoxNjQzOTEwMTY2fQ._USgmhRK_wk8m_m6aKiZ7YrCmW8jfxeHPVLZmZUd_6U
 
 
 ###

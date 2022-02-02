@@ -11,12 +11,14 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() signUpDto: SignUpDto): Promise<{ token: string }> {
-    return this.authService.signUp(signUpDto);
+    const token = await this.authService.signUp(signUpDto);
+    return token;
   }
 
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
-    return this.authService.login(loginDto);
+    const token = await this.authService.login(loginDto);
+    return token;
   }
 
   @Get('me')
@@ -24,4 +26,11 @@ export class AuthController {
   async getProfile(@CurrentUser() currentUser): Promise<any> {
     return currentUser;
   }
+
+  // @Post('logout')
+  // @UseGuards(AuthGuard())
+  // async logout(@Session() session): Promise<void> {
+  //   console.log('logout', session);
+  //   //session.userToken = null;
+  // }
 }
