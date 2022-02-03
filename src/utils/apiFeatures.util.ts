@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import nodeGeoCoder from 'node-geocoder';
+import * as nodeGeoCoder from 'node-geocoder';
 import { Location } from '../hotels/schemas/location.schema';
 import { S3 } from 'aws-sdk';
 

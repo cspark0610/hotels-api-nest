@@ -2,10 +2,10 @@ POST http://localhost:4000/auth/signUp
 Content-Type: application/json
 
 {
-  "name": "user-nuevo",
-  "email": "user-nuevo1@gmail.com",
+  "name": "user1",
+  "email": "parkcarlosseb@gmail.com",
   "password": "12345678",
-  "role": "USER"
+  "role": "SELLER"
 }
 ### login
 
@@ -13,21 +13,14 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user-nuevo1@gmail.com",
+  "email": "parkcarlosseb@gmail.com",
   "password": "12345678"
 }
 ### get logged in current user profile info
 
 GET http://localhost:4000/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmFjMjc4NTRhNGQyZTM2YThjNTBkNCIsImlhdCI6MTY0MzgyMzc2NiwiZXhwIjoxNjQzOTEwMTY2fQ._USgmhRK_wk8m_m6aKiZ7YrCmW8jfxeHPVLZmZUd_6U
-
-
-# ### logout
-# POST http://localhost:4000/auth/logout
-# Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmFjMjc4NTRhNGQyZTM2YThjNTBkNCIsImlhdCI6MTY0MzgyMzc2NiwiZXhwIjoxNjQzOTEwMTY2fQ._USgmhRK_wk8m_m6aKiZ7YrCmW8jfxeHPVLZmZUd_6U
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmM2NmVjOGFjMzhiZGI1YmFkNjc1MyIsImlhdCI6MTY0MzkzMTM3MywiZXhwIjoxNjQ0NTM2MTczfQ.yUC8Mr9tykEvtHes3h3MP5dIfHQpANOIX7IGsP2goaw
 
 ###
 
@@ -42,36 +35,49 @@ Content-Type: application/json
 
 ### RESPONSE
 # {
-#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzA2NTg0NSwiZXhwIjoxNjQzMTUyMjQ1fQ.xUXTscSrAzvswNTwwFbBa3CaPRwN_0njQkUzrP08gO0"
+#   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmM2NmVjOGFjMzhiZGI1YmFkNjc1MyIsImlhdCI6MTY0MzkzMTM3MywiZXhwIjoxNjQ0NTM2MTczfQ.yUC8Mr9tykEvtHes3h3MP5dIfHQpANOIX7IGsP2goaw"
 # }
 
 POST http://localhost:4000/hotels
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVhMjI1NmUwZGNmOGM1YWJmNzI5YiIsImlhdCI6MTY0MzI5MjQ0MywiZXhwIjoxNjQzMzc4ODQzfQ.ovFSIKnzGxCQnVCqKJS_49MnLiY1F1_yWScFOohbJjU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZmM2NmVjOGFjMzhiZGI1YmFkNjc1MyIsImlhdCI6MTY0MzkzMTM3MywiZXhwIjoxNjQ0NTM2MTczfQ.yUC8Mr9tykEvtHes3h3MP5dIfHQpANOIX7IGsP2goaw
 Content-Type: application/json
 
 {
-  "name": "Hotel 3",
-  "description": "hotel 3 description",
-  "email": "hotel-falso3@gmail.com",
-  "address": "123 Fake St",
-  "category": "TWO_START", 
+  "name": "Hotel Hilton",
+  "description": "hotel Hilton description",
+  "email": "hotel-hilton@gmail.com",
+  "address": "Macacha Guemes 351, Puerto Madero, C1106BKG Buenos Aires, Argentina",
+  "category": "FIVE_START", 
   "price": 1250000
 }
 
 ### RESPONSE
 # {
 #   "visitOrders": [],
-#   "user": "61eea2256e0dcf8c5abf729b",
+#   "user": "61fbe9584252b3337809d510",
+#   "images": [],
+#   "location": {
+#     "type": "Point",
+#     "coordinates": [
+#       -58.36366,
+#       -34.60539
+#     ],
+#     "formattedAddress": "Calle Macacha Güemes 351, Buenos Aires, C1106, AR",
+#     "city": "Buenos Aires",
+#     "state": "",
+#     "zipcode": "C1106",
+#     "country": "AR"
+#   },
 #   "isSold": false,
-#   "price": 950000,
-#   "category": "TWO_START",
-#   "address": "123 Fake St",
-#   "email": "hotel-falso2@gmail.com",
-#   "description": "hotel 2 description",
-#   "name": "Hotel 2",
-#   "_id": "61f1664ab8e600a93c826739",
-#   "createdAt": "2022-01-26T15:18:34.593Z",
-#   "updatedAt": "2022-01-26T15:18:34.593Z",
+#   "price": 1250000,
+#   "category": "FIVE_START",
+#   "address": "Macacha Guemes 351, Puerto Madero, C1106BKG Buenos Aires, Argentina",
+#   "email": "hotel-rio1@gmail.com",
+#   "description": "hotel rio 1 description",
+#   "name": "Hotel rio1",
+#   "_id": "61fbea034252b3337809d513",
+#   "createdAt": "2022-02-03T14:43:15.791Z",
+#   "updatedAt": "2022-02-03T14:43:15.791Z",
 #   "__v": 0
 # }
 
