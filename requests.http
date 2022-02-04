@@ -53,34 +53,33 @@ Content-Type: application/json
 
 ### RESPONSE
 # {
-#   "visitOrders": [],
-#   "user": "61fbe9584252b3337809d510",
-#   "images": [],
-#   "location": {
-#     "type": "Point",
-#     "coordinates": [
-#       -58.36366,
-#       -34.60539
-#     ],
-#     "formattedAddress": "Calle Macacha Güemes 351, Buenos Aires, C1106, AR",
-#     "city": "Buenos Aires",
-#     "state": "",
-#     "zipcode": "C1106",
-#     "country": "AR"
-#   },
-#   "isSold": false,
-#   "price": 1250000,
-#   "category": "FIVE_START",
-#   "address": "Macacha Guemes 351, Puerto Madero, C1106BKG Buenos Aires, Argentina",
-#   "email": "hotel-rio1@gmail.com",
-#   "description": "hotel rio 1 description",
-#   "name": "Hotel rio1",
-#   "_id": "61fbea034252b3337809d513",
-#   "createdAt": "2022-02-03T14:43:15.791Z",
-#   "updatedAt": "2022-02-03T14:43:15.791Z",
-#   "__v": 0
+#     "_id" : ObjectId("61fc67528ac38bdb5bad6757"),
+#     "visitOrders" : [],
+#     "user" : ObjectId("61fc66ec8ac38bdb5bad6753"),
+#     "images" : [],
+#     "location" : {
+#         "type" : "Point",
+#         "coordinates" : [ 
+#             -58.36366, 
+#             -34.60539
+#         ],
+#         "formattedAddress" : "Calle Macacha Güemes 351, Buenos Aires, C1106, AR",
+#         "city" : "Buenos Aires",
+#         "state" : "",
+#         "zipcode" : "C1106",
+#         "country" : "AR"
+#     },
+#     "isSold" : false,
+#     "price" : 1250000,
+#     "category" : "FIVE_START",
+#     "address" : "Macacha Guemes 351, Puerto Madero, C1106BKG Buenos Aires, Argentina",
+#     "email" : "hotel-hilton@gmail.com",
+#     "description" : "hotel Hilton description",
+#     "name" : "Hotel Hilton",
+#     "createdAt" : ISODate("2022-02-03T23:37:54.322Z"),
+#     "updatedAt" : ISODate("2022-02-03T23:37:54.322Z"),
+#     "__v" : 0
 # }
-
 
 ###
 GET http://localhost:4000/hotels
