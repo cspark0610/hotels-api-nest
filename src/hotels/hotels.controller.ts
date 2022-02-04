@@ -96,9 +96,8 @@ export class HotelsController {
     @Param('id') id: string,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ): Promise<Hotel> {
-    console.log('files', files);
-    console.log('id', id);
-
+    // console.log('files', files);
+    // console.log('id', id);
     await this.hotelsService.findById(id);
 
     const response = await this.hotelsService.uploadImages(id, files);

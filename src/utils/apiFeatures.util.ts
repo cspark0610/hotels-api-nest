@@ -59,7 +59,7 @@ export default class APIFeatures {
           Body: file.buffer,
         };
         const uploadResponse = await s3.upload(params).promise();
-        console.log('uploadResponse', uploadResponse);
+
         images.push(uploadResponse);
 
         if (images.length === files.length) {
@@ -73,14 +73,14 @@ export default class APIFeatures {
   static async deleteImagesFromS3(images) {
     const s3 = new S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_SECRET_KEY,
     });
     const imagesKeys: Array<{ Key: string }> = images.map((image) => {
       return { Key: image.key };
     });
 
     const params = {
-      Bucket: `${process.env.AWS_BUCKET_NAME}/hotels`,
+      Bucket: `${process.env.AWS_S3_BUCKET_NAME}/hotels`,
       Delete: {
         Objects: imagesKeys,
         Quiet: false,
