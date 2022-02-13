@@ -18,7 +18,7 @@ const mockUsersService = {
   addPurchase: jest.fn().mockResolvedValueOnce({ purchased: mockHotel }),
 };
 const mockHotelsService = {
-  findById: jest.fn().mockResolvedValueOnce(mockHotel),
+  findById: jest.fn(),
 };
 
 describe('UsersController', () => {
@@ -92,10 +92,16 @@ describe('UsersController', () => {
       expect(result.purchased).toMatchObject(mockAddedHotel);
     });
     it('should throw forbidden error when purchasing its own hotel', async () => {
-      const hotelId = new mongoose.Types.ObjectId().toString();
+      mockHotelsService.findById = jest.fn().mockResolvedValueOnce(mockHotel);
+      const foundHotel = await mockHotelsService.findById();
+      const hotelId = foundHotel.user.toString();
+
+      const currentUser = { ...mockUser, _id: hotelId };
+      foundHotel.user = currentUser._id;
+      //61cd5ekcsv66945x1wc
 
       await expect(
-        controller.addPurchaseHotelToUser(hotelId, mockUser as any),
+        controller.addPurchaseHotelToUser(hotelId, currentUser as any),
       ).rejects.toThrow(ForbiddenException);
     });
   });

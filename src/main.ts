@@ -10,8 +10,9 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept',
   });
   app.useGlobalPipes(new ValidationPipe({ forbidNonWhitelisted: true }));
-  //app.setGlobalPrefix('api');
-  console.log('listening on port ', process.env.PORT);
-  await app.listen(process.env.PORT || 4001);
+  //app.setGlobalPrefix('api/v1');
+  await app.listen(process.env.PORT || 4001, () => {
+    console.log('listening on port ', process.env.PORT);
+  });
 }
 bootstrap();
